@@ -10,7 +10,7 @@ If Spotify removes a song, loses a licence, or you cancel your subscription, you
 playlists and the music in them are still on your own drive.
 
 Current stable release: `1.12.0` —
-[download / release notes](https://github.com/thedinz/TrackKeep/releases/latest)
+[download / release notes](https://github.com/Network-28/TrackKeep/releases/latest)
 
 > **New here? Read this first.** TrackKeep is not a standalone music player. It
 > is a helper that sits next to Navidrome and fills its music folder. You need
@@ -155,7 +155,7 @@ Client ID, or fill it in afterwards.
          - /path/to/your/music:/music:ro   # <-- CHANGE THIS
 
      trackkeep:
-       image: ghcr.io/thedinz/spotifybu:latest
+       image: ghcr.io/network-28/spotifybu:latest
        pull_policy: always
        container_name: trackkeep
        restart: unless-stopped
@@ -242,14 +242,14 @@ that into the dashboard.
 ### Step 3 — Install TrackKeep
 
 TrackKeep is published as a Docker image. (It was originally called
-*SpotifyBU*, so the image is still named `ghcr.io/thedinz/spotifybu` — that is
+*SpotifyBU*, so the image is still named `ghcr.io/network-28/spotifybu` — that is
 the right image.)
 
 | Tag | Use it for |
 | --- | --- |
-| `ghcr.io/thedinz/spotifybu:latest` | Normal installs. Built from `main`. |
-| `ghcr.io/thedinz/spotifybu:dev` | Testing upcoming changes. Built from `dev`, may be unstable. |
-| `ghcr.io/thedinz/spotifybu:1.12.0` | Pinning an exact release. |
+| `ghcr.io/network-28/spotifybu:latest` | Normal installs. Built from `main`. |
+| `ghcr.io/network-28/spotifybu:dev` | Testing upcoming changes. Built from `dev`, may be unstable. |
+| `ghcr.io/network-28/spotifybu:1.12.0` | Pinning an exact release. |
 
 #### Option 1 — Docker Compose (recommended)
 
@@ -285,7 +285,7 @@ with this `docker-compose.yml`:
 ```yaml
 services:
   trackkeep:
-    image: ghcr.io/thedinz/spotifybu:latest
+    image: ghcr.io/network-28/spotifybu:latest
     pull_policy: always
     container_name: trackkeep
     restart: unless-stopped
@@ -334,13 +334,13 @@ Prefer an `.env` file instead of editing the Compose file? The repository
 includes [docker-compose.yml](docker-compose.yml) and
 [.env.docker.example](.env.docker.example): copy the example to `.env`, fill it
 in, and run `docker compose up -d`. Note that the example defaults to the `dev`
-image — change `TRACKKEEP_IMAGE` to `ghcr.io/thedinz/spotifybu:latest` for a
+image — change `TRACKKEEP_IMAGE` to `ghcr.io/network-28/spotifybu:latest` for a
 stable install.
 
 #### Option 2 — Unraid
 
 Add the container using the template in
-[thedinz/unraid-templates](https://github.com/thedinz/unraid-templates/blob/main/templates/spotifybu.xml).
+[Network-28/unraid-templates](https://github.com/Network-28/unraid-templates/blob/main/templates/spotifybu.xml).
 Fill in the same values as above, and point the music path at the same share
 Navidrome uses. Set `PUID=99` and `PGID=100` (or whatever your Navidrome
 container uses). Because you will browse to the server from another computer,
@@ -391,7 +391,7 @@ The in-app **Help** page repeats this workflow and explains each button.
 
 Diagnostics are written to `/config/logs/spotifybu.log` inside the container
 (`docker logs trackkeep` also helps). If you are still stuck, open an
-[issue](https://github.com/thedinz/TrackKeep/issues) with what you tried.
+[issue](https://github.com/Network-28/TrackKeep/issues) with what you tried.
 
 ## What TrackKeep does (and doesn't)
 
@@ -468,7 +468,7 @@ Set these values before starting the app:
 
 | Variable | Required | Purpose |
 | --- | --- | --- |
-| `TRACKKEEP_IMAGE` | No | Docker image tag to run. The checked-in Docker example defaults to `ghcr.io/thedinz/spotifybu:dev` for testing. Use `ghcr.io/thedinz/spotifybu:latest` for stable installs. |
+| `TRACKKEEP_IMAGE` | No | Docker image tag to run. The checked-in Docker example defaults to `ghcr.io/network-28/spotifybu:dev` for testing. Use `ghcr.io/network-28/spotifybu:latest` for stable installs. |
 | `TRACKKEEP_PORT` | No | Host port for the web UI. Defaults to `3000`. |
 | `NEXT_PUBLIC_APP_URL` | No | Public URL for TrackKeep. Set this for reverse-proxy installs. If blank, TrackKeep derives it from `X-Forwarded-Host`/`X-Forwarded-Proto` or the request host. |
 | `TRACKKEEP_APP_SECRET` | Yes | Long random value used to sign TrackKeep's own login sessions. This is not your Spotify app Client Secret. If it is blank or left as the documented placeholder, TrackKeep generates a random secret in `<TRACKKEEP_CONFIG_DIR>/app-secret` instead of signing sessions with a public value. |
@@ -527,7 +527,7 @@ The TrackKeep logo is already hosted in this repository and can be used directly
 by Homepage:
 
 ```text
-https://raw.githubusercontent.com/thedinz/TrackKeep/main/assets/trackkeep.png
+https://raw.githubusercontent.com/Network-28/TrackKeep/main/assets/trackkeep.png
 ```
 
 To add the widget:
@@ -572,7 +572,7 @@ To add the widget:
    ```yaml
    - Media:
        - TrackKeep:
-           icon: https://raw.githubusercontent.com/thedinz/TrackKeep/main/assets/trackkeep.png
+           icon: https://raw.githubusercontent.com/Network-28/TrackKeep/main/assets/trackkeep.png
            href: http://TRACKKEEP-IP:3000
            description: Spotify playlist backups
            widget:
@@ -613,7 +613,7 @@ fourth mapping later.
 #### Unraid Shared Library Permissions
 
 The Unraid template lives in
-[thedinz/unraid-templates](https://github.com/thedinz/unraid-templates/blob/main/templates/spotifybu.xml).
+[Network-28/unraid-templates](https://github.com/Network-28/unraid-templates/blob/main/templates/spotifybu.xml).
 When TrackKeep shares a mounted music library with NaviClean and Navidrome, set
 TrackKeep's `PUID` and `PGID` to the same values used by those containers. Many
 Unraid installs use `PUID=99` and `PGID=100`, but the right values are the ones
