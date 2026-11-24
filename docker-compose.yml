@@ -1,6 +1,6 @@
 services:
   trackkeep:
-    image: ${TRACKKEEP_IMAGE:-${SPOTIFYBU_IMAGE:-ghcr.io/thedinz/spotifybu:dev}}
+    image: ${TRACKKEEP_IMAGE:-${SPOTIFYBU_IMAGE:-ghcr.io/network-28/spotifybu:dev}}
     pull_policy: always
     container_name: trackkeep
     restart: unless-stopped
