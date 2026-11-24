@@ -1,5 +1,8 @@
 # TrackKeep
 
+> **Moved:** this project now lives at [github.com/Network-28](https://github.com/Network-28) and its image is `ghcr.io/network-28/spotifybu`. The old `ghcr.io/thedinz/spotifybu` image no longer gets updates. If you run it, change your container's image (on Unraid: Edit the container, then Repository) to `ghcr.io/network-28/spotifybu:latest` and apply. Your settings and data stay as they are.
+
+
 **TrackKeep keeps a local copy of your Spotify music.** It reads your Spotify
 playlists, checks which songs you already have as real audio files, finds the
 ones you are missing, and saves them into your own music folder, neatly named

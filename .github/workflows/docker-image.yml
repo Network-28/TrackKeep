@@ -38,17 +38,15 @@ jobs:
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
-          password: ${{ secrets.THEDINZ_GHCR_TOKEN || secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
           registry: ${{ env.REGISTRY }}
-          username: ${{ secrets.THEDINZ_GHCR_TOKEN != '' && 'thedinz' || github.actor }}
+          username: ${{ github.actor }}
 
       - name: Docker metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: |
-            name=ghcr.io/network-28/spotifybu
-            name=ghcr.io/network-28/spotifybu,enable=${{ secrets.THEDINZ_GHCR_TOKEN != '' }}
+          images: ghcr.io/network-28/spotifybu
           tags: |
             type=raw,value=dev,enable=${{ github.ref == 'refs/heads/dev' }}
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v') }}
