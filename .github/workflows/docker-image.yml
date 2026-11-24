@@ -14,7 +14,6 @@ permissions:
   packages: write
 
 env:
-  IMAGE_NAME: thedinz/spotifybu
   REGISTRY: ghcr.io
 
 jobs:
@@ -47,7 +46,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ghcr.io/network-28/spotifybu
           tags: |
             type=raw,value=dev,enable=${{ github.ref == 'refs/heads/dev' }}
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v') }}
