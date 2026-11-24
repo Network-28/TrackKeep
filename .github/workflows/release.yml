@@ -1,0 +1,49 @@
+name: Release
+
+# Publishes the GitHub release when a vX.Y.Z tag is pushed, so nobody has to
+# click "Publish release" by hand. Run it manually with a tag to publish a
+# release for a tag that already exists.
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag to publish, e.g. v1.2.3"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Work out the tag
+        id: tag
+        run: echo "tag=${INPUT_TAG:-$GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+        env:
+          INPUT_TAG: ${{ inputs.tag }}
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.tag.outputs.tag }}
+
+      - name: Find release notes
+        id: notes
+        run: |
+          f="docs/release-${TAG#v}.md"
+          if [ -f "$f" ]; then echo "path=$f" >> "$GITHUB_OUTPUT"; fi
+        env:
+          TAG: ${{ steps.tag.outputs.tag }}
+
+      - name: Publish GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.tag }}
+          name: TrackKeep ${{ steps.tag.outputs.tag }}
+          body_path: ${{ steps.notes.outputs.path }}
+          generate_release_notes: ${{ steps.notes.outputs.path == '' }}
